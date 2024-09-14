@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory - My Stockroom</title>
+<link href="https://fonts.googleapis.com/css2?family=Garet:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Courier New', Courier, monospace; margin: 0; font-weight: bold; }
+  .banner { width: calc(100% - 200px); background-color: #ffffff; color: #ff914d; text-align: left; padding: 20px; position: fixed; top: 0; left: 200px; z-index: 1000; margin-top: 10px;}
+  .sidebar { width: 160px; background-color: #7ed957; color: white; padding: 20px; height: 100vh; position: fixed; top: 0; left: 0; }
+  .sidebar img { width: 100%; margin-bottom: 0; margin-top: -30px;}
+  .sidebar h1, .sidebar p { margin: 0 0 10px; }
+  .highlight { background-color: #ff914d; color: #ffffff; padding: 5px; border-radius: 5px; }
+  .bottom-links { margin-top: 420px; }
+  .main-content { margin-left: 200px; padding: 20px; background-color: #ffffff; height: 100vh; padding-top: 130px; }
+  .form-container { display: flex; gap: 60px; align-items: center; margin-top: 40px; }
+  .input-label { display: block; }
+  .form-container input { margin-top: 10px; }
+  .inventory-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .inventory-header input { padding: 5px; }
+  .inventory-header button { padding: 5px 10px; background-color: #ff914d; color: white; border: none; cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+    <h1>Inventory</h1>
+</div>
+
+<div class="sidebar">
+    <img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\stockroom White.png" alt="Stockroom Logo">
+    <p>my stockroom</p>
+    <p class="highlight">inventory</p>
+    <p>new order</p>
+    <div class="bottom-links">
+        <p>account</p>
+        <p>homepage</p>
+        <p>help</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="inventory-header">
+        <div>
+            <label for="search-product">SEARCH PRODUCT:</label>
+            <input type="text" id="search-product" placeholder="Enter Product...">
+        </div>
+        <div>
+            <button>CREATE NEW</button>
+            <button>SCAN CODE</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>PRODUCT</th>
+                <th>STOCK KEEPING UNITS (SKU)</th>
+                <th>PRICE PER SKU</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Inventory items will go here -->
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

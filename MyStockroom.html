@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Stockroom Inventory</title>
+<style>
+  body { font-family: 'Courier New', Courier, monospace; margin: 0; font-weight: bold; }
+  .banner { width: calc(100% - 200px); background-color: #ffffff; color: #ff914d; text-align: left; padding: 20px; position: fixed; top: 0; left: 200px; z-index: 1000; margin-top: 10px;}
+  .sidebar { width: 160px; background-color: #7ed957; color: white; padding: 20px; height: 100vh; position: fixed; top: 0; left: 0; }
+  .sidebar img { width: 100%; margin-bottom: 0; margin-top: -30px;}
+  .sidebar h1, .sidebar p { margin: 0 0 10px; }
+  .highlight { background-color: #ff914d; color: #ffffff; padding: 5px; border-radius: 5px; }
+  .bottom-links { margin-top: 420px; }
+  .main-content { margin-left: 200px; padding: 20px; background-color: #ffffff; height: 100vh; padding-top: 130px; }
+  .form-container { display: flex; gap: 60px; align-items: center; margin-top: 40px; }
+  .input-label { display: block; }
+  .form-container input { margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\stockroom White.png" alt="Stockroom Logo">
+    <p class="highlight">my stockroom</p>
+    <p>inventory</p>
+    <p>new order</p>
+    <div class="bottom-links">
+        <p>account</p>
+        <p>homepage</p>
+        <p>help</p>
+    </div>
+</div>
+
+<div class="banner">
+    <h1>My Stockroom</h1>
+</div>
+
+<div class="main-content">
+    <div class="form-container">
+        <div>
+            <label class="input-label">DATE:</label>
+            <input type="text"/>
+        </div>
+        <div>
+            <label class="input-label">ORDER#:</label>
+            <input type="text"/>
+        </div>
+        <div>
+            <label class="input-label">CUSTOMERNAME:</label>
+            <input type="text"/>
+        </div>
+        <div>
+            <label class="input-label">TOTAL ORDER VALUE (TOV):</label>
+            <input type="text"/>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

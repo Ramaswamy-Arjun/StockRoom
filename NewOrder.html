@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Order - My Stockroom</title>
+<style>
+  body { font-family: 'Courier New', Courier, monospace; margin: 0; font-weight: bold; }
+  .banner { width: calc(100% - 200px); background-color: #ffffff; color: #ff914d; text-align: left; padding: 20px; position: fixed; top: 0; left: 200px; z-index: 1000; margin-top: 10px;}
+  .sidebar { width: 160px; background-color: #7ed957; color: white; padding: 20px; height: 100vh; position: fixed; top: 0; left: 0; }
+  .sidebar img { width: 100%; margin-bottom: 0; margin-top: -30px;}
+  .sidebar h1, .sidebar p { margin: 0 0 10px; }
+  .highlight { background-color: #ff914d; color: #ffffff; padding: 5px; border-radius: 5px; }
+  .bottom-links { margin-top: 420px; }
+  .main-content { margin-left: 200px; padding: 20px; background-color: #ffffff; height: 100vh; padding-top: 130px; }
+  .form-container { display: flex; gap: 60px; align-items: center; margin-top: 40px; }
+  .input-label { display: block; }
+  .form-container input { margin-top: 10px; }
+  .order-form { display: flex; flex-direction: column; gap: 20px; }
+  .order-form label { font-weight: bold; }
+  .order-form input, .order-form textarea { padding: 10px; width: 100%; }
+  .order-form button { padding: 10px; background-color: #ff914d; color: white; border: none; cursor: pointer; }
+  .product-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  .product-table th, .product-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  .product-table th { background-color: #f2f2f2; }
+  .grand-total { display: flex; justify-content: flex-end; align-items: center; margin-top: 20px; }
+  .grand-total span { font-weight: bold; margin-right: 20px; }
+  .grand-total button { padding: 10px 20px; background-color: #ff914d; color: white; border: none; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+    <h1>New Order</h1>
+</div>
+
+<div class="sidebar">
+    <img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\stockroom White.png" alt="Stockroom Logo">
+    <p>my stockroom</p>
+    <p>inventory</p>
+    <p class="highlight">new order</p>
+    <div class="bottom-links">
+        <p>account</p>
+        <p>homepage</p>
+        <p>help</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="order-form">
+        <label for="customer-name">CUSTOMER NAME:</label>
+        <input type="text" id="customer-name" placeholder="Enter Customer Name...">
+        
+        <div class="form-container">
+            <button type="button">ADD PRODUCT</button>
+            <button type="button">SCAN CODE</button>
+        </div>
+        
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>PRODUCT</th>
+                    <th>UNITS</th>
+                    <th>PRICE PER UNIT</th>
+                    <th>TOTAL PRICE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Product rows will go here -->
+            </tbody>
+        </table>
+        
+        <div class="grand-total">
+            <span>GRAND TOTAL: $0.00</span>
+            <button type="button">CHECK OUT</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
