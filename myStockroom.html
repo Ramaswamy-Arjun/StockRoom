@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Stockroom Inventory</title>
+<link rel="stylesheet" href="C:\Users\arjun\OneDrive\Desktop\StockRoom\static\style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\static\stockroom White.png" alt="Stockroom Logo">
+        <p class="highlight">my stockroom</p>
+        <p>inventory</p>
+        <p>new order</p>
+        <div class="bottom-links">
+            <p>account</p>
+            <p>homepage</p>
+            <p>help</p>
+        </div>
+    </div>
+    
+    <div class="banner">
+        <h1>My Stockroom</h1>
+    </div>
+    
+    <div class="main-content">
+        <h1>Welcome, <span id="username"></span>!</h1>
+        <div class="form-container">
+            <div>
+                <label class="input-label">DATE:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">ORDER#:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">CUSTOMERNAME:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">TOTAL ORDER VALUE (TOV):</label>
+                <input type="text"/>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add this JavaScript at the end of the body section -->
+    <script>
+        // Fetch user data using JWT token
+        window.onload = function() {
+            const token = sessionStorage.getItem('token'); // Retrieve the JWT token from sessionStorage
+    
+            // Check if the token exists
+            if (!token) {
+                alert("You are not logged in!");
+                window.location.href = "/login"; // Redirect to login page if not logged in
+                return;
+            }
+    
+            // Make a fetch request to the /myStockroom endpoint to get user data
+            fetch('/myStockroom', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Add Authorization header
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Use data to update the UI (for example, show username or other info)
+                if (data.username) {
+                    document.getElementById('username').textContent = data.username; // Update username dynamically
+                } else {
+                    console.error("Error: Username not found in response.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while fetching user data.");
+            });
+        };
+    </script>
+    
+    </body>
+    </html>

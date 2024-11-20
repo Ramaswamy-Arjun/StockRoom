@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stockroom - Manage Your Inventory Seamlessly</title>
+<link rel="stylesheet" href="C:\Users\arjun\OneDrive\Desktop\StockRoom\static\style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\static\stockroom IWP_20240914_160759_0000.png" alt="Stockroom Logo">
+    </div>
+    <div class="tagline">Manage your inventory, seamlessly.</div>
+    <div class="button-container">
+      <button class="cta-button" onclick="openModal('signup')">SIGN UP</button>
+      <button class="cta-button" onclick="openModal('login')">LOGIN</button>
+  </div>
+</div>
+
+<img src="C:\Users\arjun\OneDrive\Desktop\StockRoom\static\StockRoom Frontend Design_20240914_161105_0000.png" alt="Background Image" class="background-image">
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('signup')">&times;</span>
+    <h2>Sign Up</h2>
+    <label class="form-label">Username</label>
+    <input type="text" class="form-input" id="signupUsername">
+    <label class="form-label">Email</label>
+    <input type="email" class="form-input" id="signupEmail">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-input" id="signupPassword">
+    <button class="form-button" onclick="handleSignup()">Sign Up</button>
+    <p class="message" id="signupMessage"></p>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('login')">&times;</span>
+    <h2>Login</h2>
+    <label class="form-label">Username</label>
+    <input type="text" class="form-input" id="loginUsername">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-input" id="loginPassword">
+    <button class="form-button" onclick="handleLogin()">Login</button>
+    <p class="message" id="loginMessage"></p>
+  </div>
+</div>
+
+<script>
+    // Open modal function
+    function openModal(type) {
+      document.getElementById(type + 'Modal').style.display = 'block';
+    }
+
+    // Close modal function
+    function closeModal(type) {
+      document.getElementById(type + 'Modal').style.display = 'none';
+    }
+
+    // Handle signup function
+    async function handleSignup() {
+      const username = document.getElementById('signupUsername').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const signupMessage = document.getElementById('signupMessage');
+
+      try {
+        const response = await fetch('http://127.0.0.1:5555/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          signupMessage.style.color = "green";
+          signupMessage.innerText = "Signup successful! Please log in.";
+          closeModal('signup');
+        } else {
+          signupMessage.style.color = "red";
+          signupMessage.innerText = data.error || "Signup failed. Try again.";
+          console.error("Signup Error:", data); // Log detailed error info
+        }
+      } catch (error) {
+        signupMessage.innerText = "An error occurred. Please try again.";
+        console.error("Network Error:", error); // Log network error details
+      }
+    }
+
+    // Handle login function
+    async function handleLogin() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    const loginMessage = document.getElementById('loginMessage');
+
+    try {
+        const response = await fetch('http://127.0.0.1:5555/login', { // Adjust port if needed
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.access_token) {
+            // Store the JWT token in sessionStorage
+            sessionStorage.setItem('token', data.access_token);
+            console.log('Stored Token:', sessionStorage.getItem('token'));
+
+            // Update the message to indicate success
+            loginMessage.style.color = "green";
+            loginMessage.innerText = "Login successful! Redirecting...";
+
+            // Close the modal
+            closeModal('login');
+
+            // Redirect to myStockroom page after a brief delay
+            setTimeout(() => {
+              window.location.href = "http://127.0.0.1:5555/myStockroom"; // Use absolute URL
+            }, 4500);
+        } else {
+            // Handle login failure
+            loginMessage.style.color = "red";
+            loginMessage.innerText = data.error || "Login failed. Check credentials.";
+        }
+    } catch (error) {
+        // Handle network errors
+        loginMessage.style.color = "red";
+        loginMessage.innerText = "An error occurred. Please try again.";
+        console.error("Network Error:", error); // Log the error for debugging
+    }
+}
+
+
+
+    // Close modals if clicked outside
+    window.onclick = function(event) {
+      const signupModal = document.getElementById('signupModal');
+      const loginModal = document.getElementById('loginModal');
+      if (event.target == signupModal) signupModal.style.display = 'none';
+      if (event.target == loginModal) loginModal.style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
