@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stockroom Inventory</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="/static/stockroom%20White.png" alt="Stockroom Logo">
+        <p class="highlight">my stockroom</p>
+        <a href="javascript:void(0);" class="sidebar-link" id="inventoryLink">inventory</a>
+        <a href="javascript:void(0);" class="sidebar-link" id="newOrderLink">new order</a>
+        <div class="bottom-links">
+            <p>account</p>
+            <p>homepage</p>
+            <p>help</p>
+        </div>
+    </div>
+    
+    <!-- Banner -->
+    <div class="banner">
+        <h1>My Stockroom</h1>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Welcome, <span id="username"></span>!</h1>
+        
+        <!-- Form to Add a New Order -->
+        <form method="POST" action="/myStockroom" class="order-form">
+            <div>
+                <label for="customer_name" class="input-label">Customer Name:</label>
+                <input type="text" id="customer_name" name="customer_name" required>
+            </div>
+            <div>
+                <label for="total_value" class="input-label">Total Order Value (TOV):</label>
+                <input type="number" id="total_value" name="total_value" step="0.01" required>
+            </div>
+            <button type="submit" class="cta-button">Add Order</button>
+        </form>
+        
+        <!-- Table to Display Orders -->
+        <h2>Your Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Order Date</th>
+                    <th>Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.total_value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        window.onload = function () {
+            // Fetch user data and display username
+            fetch('/myStockroom', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.username) {
+                    document.getElementById('username').textContent = data.username;
+                } else {
+                    console.error("Error: Username not found in response.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                //alert("An error occurred while fetching user data.");
+            });
+
+            // Add event listeners for sidebar links
+            document.getElementById('inventoryLink').addEventListener('click', function() {
+                window.location.href = "/NewInventory";  // Redirect to the inventory page
+            });
+
+            document.getElementById('newOrderLink').addEventListener('click', function() {
+                window.location.href = "/newOrder";  // Redirect to the new order page
+            });
+        };
+    </script>
+</body>
+</html>

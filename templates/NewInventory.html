@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory - My Stockroom</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="banner">
+    <h1>Inventory</h1>
+</div>
+
+<div class="sidebar">
+    <img src="/static/stockroom%20White.png" alt="Stockroom Logo">
+    <a href="javascript:void(0);" class="sidebar-link" id="myStockroomLink">My Stockroom</a> <!-- For the current page -->
+    <p class="highlight">inventory</p>
+    <a href="javascript:void(0);" class="sidebar-link" id="newOrderLink">new order</a>
+    <div class="bottom-links">
+        <p>account</p>
+        <p>homepage</p>
+        <p>help</p>
+    </div>
+</div>
+
+
+<div class="main-content">
+    <div class="inventory-header">
+        <div>
+            <label for="search-product">SEARCH PRODUCT:</label>
+            <input type="text" id="search-product" placeholder="Enter Product...">
+        </div>
+        <div>
+            <button id="createNewBtn">CREATE NEW</button>
+            <button>SCAN CODE</button>
+        </div>
+    </div>
+
+    <!-- Form for adding new product -->
+    <div id="createNewForm" style="display:none;">
+        <form method="POST" action="/NewInventory" class="order-form">
+            <div>
+                <label for="product_name" class="input-label">Product Name:</label>
+                <input type="text" id="product_name" name="product_name" required>
+            </div>
+            <div>
+                <label for="sku" class="input-label">SKU:</label>
+                <input type="text" id="sku" name="sku" required>
+            </div>
+            <div>
+                <label for="price" class="input-label">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" required>
+            </div>
+            <div>
+                <label for="quantity" class="input-label">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            <button type="submit" class="cta-button">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Table to Display Inventory -->
+    <h2>Your Inventory</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>PRODUCT</th>
+                <th>STOCK KEEPING UNITS (SKU)</th>
+                <th>PRICE PER SKU</th>
+                <th>QUANTITY</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in inventory %}
+            <tr>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.sku }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td><button>Edit</button> <button>Delete</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    window.onload = function () {
+        // Toggle form visibility on clicking "Create New"
+        document.getElementById("createNewBtn").addEventListener("click", function() {
+            const form = document.getElementById("createNewForm");
+            form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
+
+        });
+        document.getElementById('myStockroomLink').addEventListener('click', function() {
+                window.location.href = "/myStockroom";  // Redirect to the inventory page
+            });
+
+            document.getElementById('newOrderLink').addEventListener('click', function() {
+                window.location.href = "/newOrder";  // Redirect to the new order page
+            });
+    };
+</script>
+
+</body>
+</html>

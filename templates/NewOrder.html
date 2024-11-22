@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order - My Stockroom</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="banner">
+    <h1>New Order</h1>
+</div>
+
+<div class="sidebar">
+    <img src="/static/stockroom%20White.png" alt="Stockroom Logo">
+    <a href="javascript:void(0);" class="sidebar-link" id="myStockroomLink">My Stockroom</a>
+    <a href="javascript:void(0);" class="sidebar-link" id="inventoryLink">inventory</a>
+    <p class="highlight">new order</p>
+    <div class="bottom-links">
+        <p>account</p>
+        <p>homepage</p>
+        <p>help</p>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="order-form">
+        <label for="customer-name">CUSTOMER NAME:</label>
+        <input type="text" id="customer-name" placeholder="Enter Customer Name...">
+
+        <div class="form-container">
+            <button type="button" id="addProductBtn">ADD PRODUCT</button>
+            <button type="button">SCAN CODE</button>
+        </div>
+
+        <!-- Table to add products to order -->
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>PRODUCT</th>
+                    <th>UNITS</th>
+                    <th>PRICE PER UNIT</th>
+                    <th>TOTAL PRICE</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- Dynamically added product rows will appear here -->
+            </tbody>
+        </table>
+
+        <div class="grand-total">
+            <span>GRAND TOTAL: $0.00</span>
+            <button type="button" id="submitOrderBtn">CHECK OUT</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let productRows = []; // Array to hold the products added to the order
+
+    // On page load, fetch inventory data
+    window.onload = function () {
+        fetch('/newOrder', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display the inventory items in the table
+            const inventoryTable = document.getElementById('productTableBody');
+            data.inventory.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.product_name}</td>
+                    <td><input type="number" data-id="${item.inventory_id}" class="product-quantity" value="1"></td>
+                    <td>${item.price}</td>
+                    <td><span class="total-price">$${item.price}</span></td>
+                `;
+                inventoryTable.appendChild(row);
+            });
+        });
+
+        // Handle "Add Product" button click
+        document.getElementById('addProductBtn').addEventListener('click', function() {
+            // Loop through all products in the inventory table to add the selected ones to the order
+            const productRows = document.querySelectorAll('#productTableBody tr');
+            productRows.forEach(row => {
+                const quantity = row.querySelector('.product-quantity').value;
+                const price = row.querySelector('td:nth-child(3)').innerText;
+                const productName = row.querySelector('td:nth-child(1)').innerText;
+                const totalPrice = quantity * price;
+
+                // Push product data into the order
+                productRows.push({ productName, quantity, price, totalPrice });
+            });
+        });
+
+        // Submit order data to backend
+        document.getElementById('submitOrderBtn').addEventListener('click', function() {
+            fetch('/newOrder', {
+                method: 'POST',
+                body: JSON.stringify({ customerName: document.getElementById('customer-name').value, orderItems: productRows }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    // Optionally redirect to order summary page
+                    window.location.href = "/myStockroom";
+                }
+            });
+        });
+
+        document.getElementById('myStockroomLink').addEventListener('click', function() {
+            window.location.href = "/myStockroom";  // Redirect to the inventory page
+        });
+
+        document.getElementById('inventoryLink').addEventListener('click', function() {
+            window.location.href = "/NewInventory";  // Redirect to the inventory page
+        });
+    };
+</script>
+
+</body>
+</html>

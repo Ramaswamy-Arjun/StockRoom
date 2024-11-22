@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stockroom - Manage Your Inventory Seamlessly</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="logo">
+        <img src="/static/stockroom%20White.png" alt="Stockroom Logo">
+    </div>
+    <div class="tagline">Manage your inventory, seamlessly.</div>
+    <div class="button-container">
+        <button class="cta-button" onclick="openModal('signup')">SIGN UP</button>
+        <button class="cta-button" onclick="openModal('login')">LOGIN</button>
+    </div>
+</div>
+
+<img src="static\StockRoom Frontend Design_20240914_161105_0000.png" alt="Stockroom BG" class="background-image">
+
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal('signup')">&times;</span>
+        <h2>Sign Up</h2>
+        <label class="form-label">Username</label>
+        <input type="text" id="signupUsername">
+        <label class="form-label">Email</label>
+        <input type="email" id="signupEmail">
+        <label class="form-label">Password</label>
+        <input type="password" id="signupPassword">
+        <button onclick="handleSignup()">Sign Up</button>
+        <p id="signupMessage"></p>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeModal('login')">&times;</span>
+        <h2>Login</h2>
+        <label class="form-label">Username</label>
+        <input type="text" id="loginUsername">
+        <label class="form-label">Password</label>
+        <input type="password" id="loginPassword">
+        <button onclick="handleLogin()">Login</button>
+        <p id="loginMessage"></p>
+    </div>
+</div>
+
+<script src="static\main.js">
+</script>
+</body>
+</html>

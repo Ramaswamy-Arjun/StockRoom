@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stockroom Inventory</title>
+    <link rel="stylesheet" href="D:\StockRoom\static\style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <img src="D:\StockRoom\static\stockroom White.png" alt="Stockroom Logo">
+        <p class="highlight">my stockroom</p>
+        <p>inventory</p>
+        <p>new order</p>
+        <div class="bottom-links">
+            <p>account</p>
+            <p>homepage</p>
+            <p>help</p>
+        </div>
+    </div>
+    
+    <div class="banner">
+        <h1>My Stockroom</h1>
+    </div>
+    
+    <div class="main-content">
+        <h1>Welcome, <span id="username"></span>!</h1>
+        <div class="form-container">
+            <div>
+                <label class="input-label">DATE:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">ORDER#:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">CUSTOMERNAME:</label>
+                <input type="text"/>
+            </div>
+            <div>
+                <label class="input-label">TOTAL ORDER VALUE (TOV):</label>
+                <input type="text"/>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            // No JWT token required, simply fetch data if needed (you can also remove fetch if not needed)
+            fetch('/myStockroom', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Assuming the backend will return user information here
+                if (data.username) {
+                    document.getElementById('username').textContent = data.username;
+                } else {
+                    console.error("Error: Username not found in response.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while fetching user data.");
+            });
+        };
+    </script>
+</body>
+</html>
